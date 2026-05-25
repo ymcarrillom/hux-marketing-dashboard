@@ -8,7 +8,7 @@ async function getSheets() {
   const auth = new google.auth.GoogleAuth({
     credentials: {
       client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      private_key: (() => { const k = process.env.GOOGLE_PRIVATE_KEY || ''; return k.startsWith('-----') ? k.replace(/\\n/g, '\n') : Buffer.from(k, 'base64').toString('utf8'); })(),
     },
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
