@@ -5,7 +5,10 @@ const SHEET_ID = '1px-U8PO0EtVONGwVslz04xTKEiTIeFgLM_IM74POA6c';
 const SHEET_NAME = 'Hoja 1';
 
 async function getSheets() {
-  const credentials = JSON.parse(Buffer.from(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || '', 'base64').toString('utf8'));
+  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON || '';
+  console.log('JSON_ENV length:', raw.length, 'starts:', raw.substring(0, 20));
+  const credentials = JSON.parse(Buffer.from(raw, 'base64').toString('utf8'));
+  console.log('credentials keys:', Object.keys(credentials));
   const auth = new google.auth.GoogleAuth({
     credentials,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
