@@ -243,9 +243,9 @@ export default function Dashboard() {
         }
         data.forEach(l => knownPhones.current.add(l.telefono));
         setLeads(data);
-        if (!silent) setLoading(false);
       })
-      .catch(() => { if (!silent) setLoading(false); });
+      .catch(console.error)
+      .finally(() => { if (!silent) setLoading(false); });
   };
 
   const fetchLeadsRef = useRef(fetchLeads);
